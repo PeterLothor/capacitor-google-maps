@@ -286,6 +286,7 @@ export default MyMap;
 * [`disableTouch()`](#disabletouch)
 * [`enableClustering(...)`](#enableclustering)
 * [`disableClustering()`](#disableclustering)
+* [`animateMarker(...)`](#animatemarker)
 * [`addMarker(...)`](#addmarker)
 * [`addMarkers(...)`](#addmarkers)
 * [`removeMarker(...)`](#removemarker)
@@ -383,6 +384,19 @@ enableClustering(minClusterSize?: number | undefined) => Promise<void>
 ```typescript
 disableClustering() => Promise<void>
 ```
+
+--------------------
+
+
+### animateMarker(...)
+
+```typescript
+animateMarker(args: { id: string; markerId: string; toCoords: { lat: number; lng: number; }; duration: number; }) => Promise<void>
+```
+
+| Param      | Type                                                                                                      |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| **`args`** | <code>{ id: string; markerId: string; toCoords: { lat: number; lng: number; }; duration: number; }</code> |
 
 --------------------
 
@@ -1169,4 +1183,3 @@ but the current specification only allows X, Y, and (optionally) Z to be defined
 | **`None`**      | <code>'None'</code>      | No base map tiles.                       |
 
 </docgen-api>
-
