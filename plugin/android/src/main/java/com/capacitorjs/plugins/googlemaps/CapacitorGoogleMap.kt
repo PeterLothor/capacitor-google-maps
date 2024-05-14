@@ -212,6 +212,45 @@ class CapacitorGoogleMap(
         }
     }
 
+    fun animateMarker(markerId: String, toCoords: LatLng, duration: Long, completion: (Boolean) -> Unit)
+    {
+        val marker = markers[markerId]?.googleMapMarker ?: run
+        {
+            Log.w(tag, "Marker not found with ID: $markerId")
+            completion(false)
+            return
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val startTime = System.currentTimeMillis()
+            val startLatLng = marker.position
+            val interpolator = LinearInterpolator()
+
+            while (System.currentTimeMillis() < startTime + duration)
+            {
+                val fraction = interpolator.interpolate((System.currentTimeMillis() - startTime).toFloat() / duration)
+                val nextLat = fraction * toCoords.latitude + (1 - fraction) * startLatLng.latitude
+                val nextLng = fraction * toCoords.longitude + (1 - fraction) * startLatLng.longitude
+                marker.position = LatLng(nextLat, nextLng)
+
+                delay(16)  // ~60 FPS
+            }
+
+            marker.position = toCoords
+            completion(true)
+        }
+    }
+
+    interface Interpolator
+    {
+        fun interpolate(fraction: Float): Float
+    }
+
+    class LinearInterpolator : Interpolator
+    {
+        override fun interpolate(fraction: Float): Float = fraction
+    }
+
     fun addMarker(marker: CapacitorGoogleMapMarker, callback: (result: Result<String>) -> Unit) {
         try {
             googleMap ?: throw GoogleMapNotAvailable()

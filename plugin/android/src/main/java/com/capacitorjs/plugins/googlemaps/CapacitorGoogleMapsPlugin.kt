@@ -211,6 +211,33 @@ class CapacitorGoogleMapsPlugin : Plugin(), OnMapsSdkInitializedCallback {
     }
 
     @PluginMethod
+    fun animateMarker(call: PluginCall) {
+        val id = call.getString("id")
+        val markerId = call.getString("markerId")
+        val lat = call.getDouble("latitude")
+        val lng = call.getDouble("longitude")
+        val duration = call.getInt("duration").toLong()
+
+        if (id == null || markerId == null || lat == null || lng == null) {
+            call.reject("Invalid parameters for animateMarker")
+            return
+        }
+
+        val map = maps[id] ?: run {
+            call.reject("Map not found with ID: $id")
+            return
+        }
+
+        map.animateMarker(markerId, LatLng(lat, lng), duration) { success ->
+            if (success) {
+                call.resolve()
+            } else {
+                call.reject("Failed to animate marker")
+            }
+        }
+    }
+
+    @PluginMethod
     fun addMarker(call: PluginCall) {
         try {
             val id = call.getString("id")
