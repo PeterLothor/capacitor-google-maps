@@ -214,7 +214,7 @@ class CapacitorGoogleMap(
 
     fun animateMarker(markerId: String, toCoords: LatLng, duration: Long, completion: (Boolean) -> Unit)
     {
-        val marker = markers[markerId]?.googleMapMarker ?: null
+        val marker = markers[markerId]?.googleMapMarker//if (markerId != null) markers[markerId]?.googleMapMarker else null
 
         if(marker == null)
         {
@@ -233,7 +233,10 @@ class CapacitorGoogleMap(
                 val fraction = interpolator.interpolate((System.currentTimeMillis() - startTime).toFloat() / duration)
                 val nextLat = fraction * toCoords.latitude + (1 - fraction) * startLatLng.latitude
                 val nextLng = fraction * toCoords.longitude + (1 - fraction) * startLatLng.longitude
-                marker.position = LatLng(nextLat, nextLng)
+
+                marker.setPosition(LatLng(nextLat, nextLng))
+
+//                marker.position = LatLng(nextLat, nextLng)
 
                 delay(16)  // ~60 FPS
             }

@@ -13,6 +13,7 @@ ext {
 }
 
 buildscript {
+//    '1.8.10'//
     ext.kotlin_version = project.hasProperty("kotlin_version") ? rootProject.ext.kotlin_version : '1.9.10'
     repositories {
         google()
@@ -68,6 +69,9 @@ android {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinxCoroutinesVersion")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
     }
+//    kotlinOptions {
+//        jvmTarget = "1.8"  // Ensure this matches the Java version compatibility you desire
+//    }
 }
 
 repositories {
