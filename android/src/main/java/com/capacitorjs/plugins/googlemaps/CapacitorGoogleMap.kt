@@ -214,10 +214,13 @@ class CapacitorGoogleMap(
 
     fun animateMarker(markerId: String, toCoords: LatLng, duration: Long, completion: (Boolean) -> Unit)
     {
-        val marker = markers[markerId]?.googleMapMarker ?:
+        val marker = markers[markerId]?.googleMapMarker ?: null
+
+        if(marker == null)
         {
             Log.w("CapacitorGoogleMaps", "Marker not found with ID: $markerId")
             completion(false)
+            return
         }
 
         CoroutineScope(Dispatchers.Main).launch {
