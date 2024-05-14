@@ -4,3 +4,5 @@ package-lock.json
 Podfile.lock
 Package.resolved
 .env
+
+.idea/
