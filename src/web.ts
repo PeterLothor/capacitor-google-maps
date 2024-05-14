@@ -266,6 +266,47 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     return { ids: markerIds };
   }
 
+  async animateMarker(args: { id: string, markerId: string, toCoords: { lat: number, lng: number }, duration: number }): Promise<void>
+  {
+    const mapItem = this.maps[args.id];
+    const marker = mapItem.markers[args.markerId];
+
+    if (!marker)
+    {
+      throw new Error('Marker not found');
+    }
+
+    const startPosition = marker.getPosition();
+    const endPosition = new google.maps.LatLng(args.toCoords.lat, args.toCoords.lng);
+    const startTime = Date.now();
+    const endTime = startTime + args.duration;
+
+    const animateStep = () =>
+    {
+      const now = Date.now();
+      const timeFraction = Math.min((now - startTime) / args.duration, 1);
+      const lat = this.interpolate(startPosition.lat(), endPosition.lat(), timeFraction);
+      const lng = this.interpolate(startPosition.lng(), endPosition.lng(), timeFraction);
+      marker.setPosition(new google.maps.LatLng(lat, lng));
+
+      if (now < endTime)
+      {
+        requestAnimationFrame(animateStep);
+      }
+      else
+      {
+        marker.setPosition(endPosition); // Ensure the marker ends exactly at the endPosition.
+      }
+    };
+
+    requestAnimationFrame(animateStep);
+  }
+
+  private interpolate(startValue: number, endValue: number, fraction: number): number
+  {
+    return startValue + (endValue - startValue) * fraction;
+  }
+
   async addMarker(_args: AddMarkerArgs): Promise<{ id: string }> {
     const markerOpts = this.buildMarkerOpts(_args.marker, this.maps[_args.id].map);
 
