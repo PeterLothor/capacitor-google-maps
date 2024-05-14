@@ -295,6 +295,17 @@ export interface MapPadding {
   bottom: number;
 }
 
+export interface AnimMarker
+{
+  markerId: string;
+  toCoords:
+      {
+        lat: string,
+        lng: string
+      };
+  duration: number
+}
+
 /**
  * A marker is an icon placed at a particular point on the map's surface.
  */

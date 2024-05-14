@@ -286,6 +286,7 @@ export default MyMap;
 * [`disableTouch()`](#disabletouch)
 * [`enableClustering(...)`](#enableclustering)
 * [`disableClustering()`](#disableclustering)
+* [`animateMarker(...)`](#animatemarker)
 * [`addMarker(...)`](#addmarker)
 * [`addMarkers(...)`](#addmarkers)
 * [`removeMarker(...)`](#removemarker)
@@ -383,6 +384,19 @@ enableClustering(minClusterSize?: number | undefined) => Promise<void>
 ```typescript
 disableClustering() => Promise<void>
 ```
+
+--------------------
+
+
+### animateMarker(...)
+
+```typescript
+animateMarker(args: { id: string; markerId: string; toCoords: { lat: string; lng: string; }; duration: number; }) => Promise<void>
+```
+
+| Param      | Type                                                                                                      |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| **`args`** | <code>{ id: string; markerId: string; toCoords: { lat: string; lng: string; }; duration: number; }</code> |
 
 --------------------
 

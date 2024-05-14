@@ -18,7 +18,7 @@ import type {
   Circle,
   CircleClickCallbackData,
   Polyline,
-  PolylineCallbackData,
+  PolylineCallbackData, AnimMarker,
 } from './definitions';
 import { LatLngBounds, MapType } from './definitions';
 import type { CreateMapArgs } from './implementation';
@@ -35,7 +35,7 @@ export interface GoogleMapInterface {
     minClusterSize?: number
   ): Promise<void>;
   disableClustering(): Promise<void>;
-  animateMarker(args: { id: string, markerId: string, toCoords: { lat: number, lng: number }, duration: number }): Promise<void>;
+  animateMarker(args: { id: string, markerId: string, toCoords: { lat: string, lng: string }, duration: number }): Promise<void>;
   addMarker(marker: Marker): Promise<string>;
   addMarkers(markers: Marker[]): Promise<string[]>;
   removeMarker(id: string): Promise<void>;
@@ -342,6 +342,22 @@ export class GoogleMap {
 
     return res.id;
   }
+
+  async animateMarker(animMarker: AnimMarker): Promise<void> {
+
+    await CapacitorGoogleMaps.animateMarker({
+      id: this.id,
+      markerId: animMarker.markerId,
+      toCoords: {
+        lat: animMarker.toCoords.lat,
+        lng: animMarker.toCoords.lng
+      },
+      duration: animMarker.duration
+    });
+
+    return;
+  }
+
 
   /**
    * Adds multiple markers to the map

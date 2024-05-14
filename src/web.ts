@@ -266,7 +266,7 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     return { ids: markerIds };
   }
 
-  async animateMarker(args: { id: string, markerId: string, toCoords: { lat: number, lng: number }, duration: number }): Promise<void>
+  async animateMarker(args: { id: string, markerId: string, toCoords: { lat: string, lng: string }, duration: number }): Promise<void>
   {
     const mapItem = this.maps[args.id];
     const marker = mapItem.markers[args.markerId];
@@ -277,7 +277,7 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     }
 
     const startPosition = marker.getPosition();
-    const endPosition = new google.maps.LatLng(args.toCoords.lat, args.toCoords.lng);
+    const endPosition = new google.maps.LatLng(parseFloat(args.toCoords.lat), parseFloat(args.toCoords.lng));
     const startTime = Date.now();
     const endTime = startTime + args.duration;
 
@@ -285,9 +285,14 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     {
       const now = Date.now();
       const timeFraction = Math.min((now - startTime) / args.duration, 1);
-      const lat = this.interpolate(startPosition.lat(), endPosition.lat(), timeFraction);
-      const lng = this.interpolate(startPosition.lng(), endPosition.lng(), timeFraction);
-      marker.setPosition(new google.maps.LatLng(lat, lng));
+
+      if(startPosition != null && endPosition != null)
+      {
+        const lat = this.interpolate(startPosition.lat(), endPosition.lat(), timeFraction);
+        const lng = this.interpolate(startPosition.lng(), endPosition.lng(), timeFraction);
+        marker.setPosition(new google.maps.LatLng(lat, lng));
+      }
+
 
       if (now < endTime)
       {
