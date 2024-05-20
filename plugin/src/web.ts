@@ -266,7 +266,7 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     return { ids: markerIds };
   }
 
-  async animateMarker(args: { id: string, markerId: string, toCoords: { lat: string, lng: string }, duration: number }): Promise<void>
+  async animateMarker(args: { id: string, markerId: string, lat: string, lng: string, duration: number }): Promise<void>
   {
     const mapItem = this.maps[args.id];
     const marker = mapItem.markers[args.markerId];
@@ -277,7 +277,7 @@ export class CapacitorGoogleMapsWeb extends WebPlugin implements CapacitorGoogle
     }
 
     const startPosition = marker.getPosition();
-    const endPosition = new google.maps.LatLng(parseFloat(args.toCoords.lat), parseFloat(args.toCoords.lng));
+    const endPosition = new google.maps.LatLng(parseFloat(args.lat), parseFloat(args.lng));
     const startTime = Date.now();
     const endTime = startTime + args.duration;
 

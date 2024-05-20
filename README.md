@@ -391,12 +391,12 @@ disableClustering() => Promise<void>
 ### animateMarker(...)
 
 ```typescript
-animateMarker(args: { id: string; markerId: string; toCoords: { lat: number; lng: number; }; duration: number; }) => Promise<void>
+animateMarker(args: { id: string; markerId: string; toCoords: { lat: string; lng: string; }; duration: number; }) => Promise<void>
 ```
 
 | Param      | Type                                                                                                      |
 | ---------- | --------------------------------------------------------------------------------------------------------- |
-| **`args`** | <code>{ id: string; markerId: string; toCoords: { lat: number; lng: number; }; duration: number; }</code> |
+| **`args`** | <code>{ id: string; markerId: string; toCoords: { lat: string; lng: string; }; duration: number; }</code> |
 
 --------------------
 
