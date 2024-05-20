@@ -214,8 +214,8 @@ class CapacitorGoogleMapsPlugin : Plugin(), OnMapsSdkInitializedCallback {
     fun animateMarker(call: PluginCall) {
         val id = call.getString("id")
         val markerId = call.getString("markerId")
-        val lat = call.getDouble("latitude")
-        val lng = call.getDouble("longitude")
+        val lat = call.getString("lat")?.toDouble()?:0.0
+        val lng = call.getString("lng")?.toDouble()?:0.0
         val duration = call.getInt("duration")?.toLong()?: 0L
 
         if (id == null || markerId == null || lat == null || lng == null) {

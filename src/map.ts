@@ -348,10 +348,8 @@ export class GoogleMap {
     await CapacitorGoogleMaps.animateMarker({
       id: this.id,
       markerId: animMarker.markerId,
-      toCoords: {
-        lat: animMarker.toCoords.lat,
-        lng: animMarker.toCoords.lng
-      },
+      lat: animMarker.toCoords.lat,
+      lng: animMarker.toCoords.lng,
       duration: animMarker.duration
     });
 
